@@ -6,55 +6,80 @@
     <title>导航页</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
-            padding: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            height: 100vh;
-            background-color: #f0f0f0;
+            min-height: 100vh;
         }
         .container {
-            text-align: center;
+            width: 100%;
+            max-width: 600px;
         }
         .link {
             display: block;
-            margin: 20px 0; /* 增加按钮之间的间距 */
-            padding: 20px 40px; /* 增大按钮的内边距 */
-            font-size: 24px; /* 增大字体大小 */
-            color: #fff;
-            background-color: #007BFF;
+            margin: 10px 0;
+            padding: 15px;
+            background-color: #fff;
+            color: #333;
             text-decoration: none;
-            border-radius: 10px; /* 增大圆角 */
-            transition: background-color 0.3s ease;
-            width: 80%; /* 按钮宽度占屏幕宽度的80% */
-            max-width: 300px; /* 最大宽度限制 */
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+            text-align: center;
+            font-size: 16px;
         }
         .link:hover {
-            background-color: #0056b3;
+            background-color: #007BFF;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        @media (min-width: 768px) {
+            .link {
+                padding: 18px;
+                font-size: 18px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <a href="https://wandsgyu.github.io/All/" class="link">All</a>
-        <a href="https://wandsgyu.github.io/4-20vc/" class="link">4-20vc</a>
-        <a href="https://wandsgyu.github.io/ETH-MEME/" class="link">ETH-MEME</a>
-        <a href="https://wandsgyu.github.io/BITGET/" class="link">BITGET</a>
-        <a href="https://wandsgyu.github.io/BTC-MEME/" class="link">BTC-MEME</a>
-        <a href="https://wandsgyu.github.io/IP-4.74short/" class="link">IP-4.74short</a>
-        <a href="https://wandsgyu.github.io/TRUMP-MELANIA/" class="link">TRUMP-MELANIA</a>
-        <a href="https://wandsgyu.github.io/doge-meme/" class="link">doge-meme</a>
-        <a href="https://wandsgyu.github.io/feb 1-4-20-vc/" class="link">feb 1-4-20-vc</a>
+    <div class="container" id="links-container"></div>
+
+    <script>
+        // 只需要修改这个数组即可添加/删除链接
+        const links = [
+            "All",
+            "4-20vc",
+            "ETH-MEME",
+            "BITGET",
+            "BTC-MEME",
+            "IP-4.74short",
+            "TRUMP-MELANIA",
+            "doge-meme",
+            "feb 1-4-20-vc",
+            "导航页Github"
+        ];
+
+        // 自动生成导航链接
+        const container = document.getElementById('links-container');
         
-
-
-        
-        <a href="https://github.com/WandsgYu/Navigation/blob/main/index.html" class="link">导航页Github</a>
-       
-
-    </div>
+        links.forEach(name => {
+            const link = document.createElement('a');
+            link.className = 'link';
+            link.textContent = name;
+            link.href = `https://wandsgyu.github.io/${name.replace(/ /g, '-')}/`;
+            link.target = "_blank";
+            
+            // 特殊处理Github链接
+            if(name === "导航页Github") {
+                link.href = "https://github.com/WandsgYu/Navigation/blob/main/index.html";
+            }
+            
+            container.appendChild(link);
+        });
+    </script>
 </body>
 </html>
