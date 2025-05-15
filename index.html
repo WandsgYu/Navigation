@@ -9,78 +9,153 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #f5f5f5;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             display: flex;
             justify-content: center;
             min-height: 100vh;
+            color: #e0e0e0;
         }
+        
         .container {
             width: 100%;
-            max-width: 600px;
+            max-width: 1200px;
         }
-        .link {
-            display: block;
-            margin: 10px 0;
-            padding: 15px;
-            background-color: #fff;
-            color: #333;
-            text-decoration: none;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: all 0.2s ease;
+        
+        .title {
             text-align: center;
+            margin-bottom: 30px;
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-weight: 600;
+            background: linear-gradient(90deg, #4ca1af, #c4e0e5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .link-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .link-card {
+            position: relative;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            text-align: center;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid rgba(79, 70, 229, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .link-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #4f46e5, #818cf8);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            border-color: rgba(79, 70, 229, 0.3);
+        }
+        
+        .link-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .link-card a {
+            text-decoration: none;
+            color: #e0e0e0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             font-size: 16px;
+            font-weight: 500;
+            transition: color 0.3s ease;
         }
-        .link:hover {
-            background-color: #007BFF;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        
+        .link-card:hover a {
+            color: #818cf8;
         }
-        @media (min-width: 768px) {
-            .link {
-                padding: 18px;
-                font-size: 18px;
+        
+        @media (max-width: 576px) {
+            .link-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .link-card {
+                height: 80px;
+            }
+            
+            .link-card a {
+                font-size: 14px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container" id="links-container"></div>
+    <div class="container">
+        <h1 class="title">快捷导航</h1>
+        <div class="link-grid" id="links-container"></div>
+    </div>
 
     <script>
-        // 只需要修改这个数组即可添加/删除链接
+        // 修改这个数组来自定义链接：
+        // name - 显示在卡片上的名称
+        // urlSuffix - 链接的后缀部分
         const links = [
-            "RIP12340",
-            "All",
-            "4-20vc",
-            "ETH-MEME",
-            "BITGET",
-            "BTC-MEME",
-            "IP-4.74short",
-            "TRUMP-MELANIA",
-            "doge-meme",
-            "Timer",
-            "feb 1-4-20-vc",
-            "导航页Github"
+            { name: "RIP12340", urlSuffix: "RIP12340" },
+            { name: "5月15日冲动用花呗套4700，买了0.006btc", urlSuffix: "one" },
+            { name: "All", urlSuffix: "All" },
+            { name: "4月20日开始做多主流做空弱山寨", urlSuffix: "4-20vc" },
+            { name: "2月做多ETH做空一揽子MEME", urlSuffix: "ETH-MEME" },
+            { name: "BITGET带单", urlSuffix: "BITGET" },
+            { name: "做多BTC-做空MEME", urlSuffix: "BTC-MEME" },
+            { name: "IP，在4.74short", urlSuffix: "IP-4.74short" },
+            { name: "TRUMP-MELANIA汇率", urlSuffix: "TRUMP-MELANIA" },
+            { name: "做多doge做空meme", urlSuffix: "doge-meme" },
+            { name: "Timer", urlSuffix: "Timer" },
+            { name: "2月20日开始做多主流做空弱山寨", urlSuffix: "feb-1-4-20-vc" },
+            { name: "导航页Github", urlSuffix: "https://github.com/WandsgYu/Navigation/blob/main/index.html", isExternal: true }
         ];
 
         // 自动生成导航链接
         const container = document.getElementById('links-container');
         
-        links.forEach(name => {
-            const link = document.createElement('a');
-            link.className = 'link';
-            link.textContent = name;
-            link.href = `https://wandsgyu.github.io/${name.replace(/ /g, '-')}/`;
-            link.target = "_blank";
+        links.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'link-card';
             
-            // 特殊处理Github链接
-            if(name === "导航页Github") {
-                link.href = "https://github.com/WandsgYu/Navigation/blob/main/index.html";
+            const link = document.createElement('a');
+            
+            // 处理外部链接
+            if (item.isExternal) {
+                link.href = item.urlSuffix;
+            } else {
+                link.href = `https://wandsgyu.github.io/${item.urlSuffix}/`;
             }
             
-            container.appendChild(link);
+            link.target = "_blank";
+            link.textContent = item.name;
+            
+            card.appendChild(link);
+            container.appendChild(card);
         });
     </script>
 </body>
